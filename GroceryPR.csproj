@@ -193,6 +193,17 @@
     <Compile Include="Security\APIKeyMessageHandler.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Angular\controllers\main.js" />
+    <Content Include="Angular\scripts\angular-animate.min.js" />
+    <Content Include="Angular\scripts\angular-aria.min.js" />
+    <Content Include="Angular\scripts\angular-cookies.min.js" />
+    <Content Include="Angular\scripts\angular-loader.min.js" />
+    <Content Include="Angular\scripts\angular-message-format.min.js" />
+    <Content Include="Angular\scripts\angular-messages.min.js" />
+    <Content Include="Angular\scripts\angular-parse-ext.min.js" />
+    <Content Include="Angular\scripts\angular-route.min.js" />
+    <Content Include="Angular\scripts\angular-touch.min.js" />
+    <Content Include="Angular\scripts\angular.min.js" />
     <Content Include="Content\assets\css\bootstrap.css" />
     <Content Include="Content\assets\css\bootstrap.min.css" />
     <Content Include="Content\assets\css\demo.css" />
