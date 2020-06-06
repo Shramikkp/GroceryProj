@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f3fe5bf211f34acab626881bee4480c8" Name="Diagram1">
+        <EntityTypeShape EntityType="GroceryDBModel.AdminTbl" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GroceryDBModel.CityTbl" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GroceryDBModel.CountryTbl" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GroceryDBModel.StateTbl" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GroceryDBModel.UserTbl" Width="1.5" PointX="7.5" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="GroceryDBModel.FK_CityTbl_StateTbl" ManuallyRouted="false" />
+        <AssociationConnector Association="GroceryDBModel.FK_UserTbl_UserTbl" ManuallyRouted="false" />
+        <AssociationConnector Association="GroceryDBModel.FK_StateTbl_CountryTbl" ManuallyRouted="false" />
+        <AssociationConnector Association="GroceryDBModel.FK_UserTbl_CountryTbl" ManuallyRouted="false" />
+        <AssociationConnector Association="GroceryDBModel.FK_UserTbl_StateTbl" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

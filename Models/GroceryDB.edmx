@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GroceryDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminTbl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="200" />
+          <Property Name="Token" Type="uniqueidentifier" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CityTbl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="StateId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CountryTbl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StateTbl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="CountryId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserTbl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="50" />
+          <Property Name="WhatsAppNumber" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="CountryId" Type="int" Nullable="false" />
+          <Property Name="StateId" Type="int" Nullable="false" />
+          <Property Name="CityId" Type="bigint" Nullable="false" />
+          <Property Name="Landmark" Type="varchar" MaxLength="1000" />
+          <Property Name="SocityName" Type="varchar" MaxLength="500" />
+          <Property Name="WingName" Type="varchar" MaxLength="100" />
+          <Property Name="FlatNumber" Type="varchar" MaxLength="100" />
+          <Property Name="Token" Type="uniqueidentifier" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CityTbl_StateTbl">
+          <End Role="StateTbl" Type="Self.StateTbl" Multiplicity="1" />
+          <End Role="CityTbl" Type="Self.CityTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StateTbl">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CityTbl">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StateTbl_CountryTbl">
+          <End Role="CountryTbl" Type="Self.CountryTbl" Multiplicity="1" />
+          <End Role="StateTbl" Type="Self.StateTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CountryTbl">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StateTbl">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTbl_CountryTbl">
+          <End Role="CountryTbl" Type="Self.CountryTbl" Multiplicity="1" />
+          <End Role="UserTbl" Type="Self.UserTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CountryTbl">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTbl">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTbl_StateTbl">
+          <End Role="StateTbl" Type="Self.StateTbl" Multiplicity="1" />
+          <End Role="UserTbl" Type="Self.UserTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StateTbl">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTbl">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTbl_UserTbl">
+          <End Role="CityTbl" Type="Self.CityTbl" Multiplicity="1" />
+          <End Role="UserTbl" Type="Self.UserTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityTbl">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTbl">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GroceryDBModelStoreContainer">
+          <EntitySet Name="AdminTbl" EntityType="Self.AdminTbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CityTbl" EntityType="Self.CityTbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CountryTbl" EntityType="Self.CountryTbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StateTbl" EntityType="Self.StateTbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTbl" EntityType="Self.UserTbl" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CityTbl_StateTbl" Association="Self.FK_CityTbl_StateTbl">
+            <End Role="StateTbl" EntitySet="StateTbl" />
+            <End Role="CityTbl" EntitySet="CityTbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StateTbl_CountryTbl" Association="Self.FK_StateTbl_CountryTbl">
+            <End Role="CountryTbl" EntitySet="CountryTbl" />
+            <End Role="StateTbl" EntitySet="StateTbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTbl_CountryTbl" Association="Self.FK_UserTbl_CountryTbl">
+            <End Role="CountryTbl" EntitySet="CountryTbl" />
+            <End Role="UserTbl" EntitySet="UserTbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTbl_StateTbl" Association="Self.FK_UserTbl_StateTbl">
+            <End Role="StateTbl" EntitySet="StateTbl" />
+            <End Role="UserTbl" EntitySet="UserTbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTbl_UserTbl" Association="Self.FK_UserTbl_UserTbl">
+            <End Role="CityTbl" EntitySet="CityTbl" />
+            <End Role="UserTbl" EntitySet="UserTbl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GroceryDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdminTbl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Token" Type="Guid" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="CityTbl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StateId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="StateTbl" Relationship="Self.FK_CityTbl_StateTbl" FromRole="CityTbl" ToRole="StateTbl" />
+          <NavigationProperty Name="UserTbls" Relationship="Self.FK_UserTbl_UserTbl" FromRole="CityTbl" ToRole="UserTbl" />
+        </EntityType>
+        <EntityType Name="CountryTbl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="StateTbls" Relationship="Self.FK_StateTbl_CountryTbl" FromRole="CountryTbl" ToRole="StateTbl" />
+          <NavigationProperty Name="UserTbls" Relationship="Self.FK_UserTbl_CountryTbl" FromRole="CountryTbl" ToRole="UserTbl" />
+        </EntityType>
+        <EntityType Name="StateTbl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CityTbls" Relationship="Self.FK_CityTbl_StateTbl" FromRole="StateTbl" ToRole="CityTbl" />
+          <NavigationProperty Name="CountryTbl" Relationship="Self.FK_StateTbl_CountryTbl" FromRole="StateTbl" ToRole="CountryTbl" />
+          <NavigationProperty Name="UserTbls" Relationship="Self.FK_UserTbl_StateTbl" FromRole="StateTbl" ToRole="UserTbl" />
+        </EntityType>
+        <EntityType Name="UserTbl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WhatsAppNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
+          <Property Name="StateId" Type="Int32" Nullable="false" />
+          <Property Name="CityId" Type="Int64" Nullable="false" />
+          <Property Name="Landmark" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="SocityName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="WingName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FlatNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Token" Type="Guid" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CityTbl" Relationship="Self.FK_UserTbl_UserTbl" FromRole="UserTbl" ToRole="CityTbl" />
+          <NavigationProperty Name="CountryTbl" Relationship="Self.FK_UserTbl_CountryTbl" FromRole="UserTbl" ToRole="CountryTbl" />
+          <NavigationProperty Name="StateTbl" Relationship="Self.FK_UserTbl_StateTbl" FromRole="UserTbl" ToRole="StateTbl" />
+        </EntityType>
+        <Association Name="FK_CityTbl_StateTbl">
+          <End Role="StateTbl" Type="Self.StateTbl" Multiplicity="1" />
+          <End Role="CityTbl" Type="Self.CityTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StateTbl">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CityTbl">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTbl_UserTbl">
+          <End Role="CityTbl" Type="Self.CityTbl" Multiplicity="1" />
+          <End Role="UserTbl" Type="Self.UserTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CityTbl">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTbl">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StateTbl_CountryTbl">
+          <End Role="CountryTbl" Type="Self.CountryTbl" Multiplicity="1" />
+          <End Role="StateTbl" Type="Self.StateTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CountryTbl">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StateTbl">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTbl_CountryTbl">
+          <End Role="CountryTbl" Type="Self.CountryTbl" Multiplicity="1" />
+          <End Role="UserTbl" Type="Self.UserTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CountryTbl">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTbl">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTbl_StateTbl">
+          <End Role="StateTbl" Type="Self.StateTbl" Multiplicity="1" />
+          <End Role="UserTbl" Type="Self.UserTbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StateTbl">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTbl">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GroceryDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdminTbls" EntityType="Self.AdminTbl" />
+          <EntitySet Name="CityTbls" EntityType="Self.CityTbl" />
+          <EntitySet Name="CountryTbls" EntityType="Self.CountryTbl" />
+          <EntitySet Name="StateTbls" EntityType="Self.StateTbl" />
+          <EntitySet Name="UserTbls" EntityType="Self.UserTbl" />
+          <AssociationSet Name="FK_CityTbl_StateTbl" Association="Self.FK_CityTbl_StateTbl">
+            <End Role="StateTbl" EntitySet="StateTbls" />
+            <End Role="CityTbl" EntitySet="CityTbls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTbl_UserTbl" Association="Self.FK_UserTbl_UserTbl">
+            <End Role="CityTbl" EntitySet="CityTbls" />
+            <End Role="UserTbl" EntitySet="UserTbls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StateTbl_CountryTbl" Association="Self.FK_StateTbl_CountryTbl">
+            <End Role="CountryTbl" EntitySet="CountryTbls" />
+            <End Role="StateTbl" EntitySet="StateTbls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTbl_CountryTbl" Association="Self.FK_UserTbl_CountryTbl">
+            <End Role="CountryTbl" EntitySet="CountryTbls" />
+            <End Role="UserTbl" EntitySet="UserTbls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTbl_StateTbl" Association="Self.FK_UserTbl_StateTbl">
+            <End Role="StateTbl" EntitySet="StateTbls" />
+            <End Role="UserTbl" EntitySet="UserTbls" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GroceryDBModelStoreContainer" CdmEntityContainer="GroceryDBEntities">
+          <EntitySetMapping Name="AdminTbls">
+            <EntityTypeMapping TypeName="GroceryDBModel.AdminTbl">
+              <MappingFragment StoreEntitySet="AdminTbl">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CityTbls">
+            <EntityTypeMapping TypeName="GroceryDBModel.CityTbl">
+              <MappingFragment StoreEntitySet="CityTbl">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CountryTbls">
+            <EntityTypeMapping TypeName="GroceryDBModel.CountryTbl">
+              <MappingFragment StoreEntitySet="CountryTbl">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StateTbls">
+            <EntityTypeMapping TypeName="GroceryDBModel.StateTbl">
+              <MappingFragment StoreEntitySet="StateTbl">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTbls">
+            <EntityTypeMapping TypeName="GroceryDBModel.UserTbl">
+              <MappingFragment StoreEntitySet="UserTbl">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="WhatsAppNumber" ColumnName="WhatsAppNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="SocityName" ColumnName="SocityName" />
+                <ScalarProperty Name="WingName" ColumnName="WingName" />
+                <ScalarProperty Name="FlatNumber" ColumnName="FlatNumber" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
